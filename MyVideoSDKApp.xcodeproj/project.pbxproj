@@ -14,6 +14,7 @@
 		818048702A8397AD00AC891F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8180486E2A8397AD00AC891F /* Main.storyboard */; };
 		818048722A8397AE00AC891F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 818048712A8397AE00AC891F /* Assets.xcassets */; };
 		818048752A8397AE00AC891F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 818048732A8397AE00AC891F /* LaunchScreen.storyboard */; };
+		81EE79732DB7F2A9004F5A8E /* ZoomVideoSDK-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = 81EE79722DB7F2A9004F5A8E /* ZoomVideoSDK-iOS */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -51,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81EE79732DB7F2A9004F5A8E /* ZoomVideoSDK-iOS in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,6 +148,9 @@
 				Base,
 			);
 			mainGroup = 8180485C2A8397AD00AC891F;
+			packageReferences = (
+				81EE79712DB7F2A9004F5A8E /* XCRemoteSwiftPackageReference "zoom-video-sdk-iOS" */,
+			);
 			productRefGroup = 818048662A8397AD00AC891F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -408,6 +413,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		81EE79712DB7F2A9004F5A8E /* XCRemoteSwiftPackageReference "zoom-video-sdk-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/zoom/zoom-video-sdk-iOS/";
+			requirement = {
+				branch = "swift-package-manager";
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		81EE79722DB7F2A9004F5A8E /* ZoomVideoSDK-iOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 81EE79712DB7F2A9004F5A8E /* XCRemoteSwiftPackageReference "zoom-video-sdk-iOS" */;
+			productName = "ZoomVideoSDK-iOS";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8180485D2A8397AD00AC891F /* Project object */;
 }
