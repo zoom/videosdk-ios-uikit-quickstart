@@ -6,7 +6,6 @@
 
 import UIKit
 // (0)
-import ZoomVideoSDK
 
 enum ControlOption: Int {
     case toggleVideo = 0, toggleAudio, shareScreen, endSession
@@ -33,10 +32,6 @@ class SessionViewController: UIViewController {
     // TODO: Ensure that you do not hard code JWT or any other confidential credentials in your production app.
     // details: https://developers.zoom.us/docs/video-sdk/ios/sessions/#create-and-join-a-session
     // (2)
-    let token = ""            // JWT
-    let sessionName = ""      // NOTE: Must match "tpc" field in JWT
-    let userName = ""
-    let sessionPassword = ""  // optional
     
     // MARK: UI setup
     
@@ -106,7 +101,6 @@ class SessionViewController: UIViewController {
     
     override func viewDidLoad() {
         // (3)
-        ZoomVideoSDK.shareInstance()?.delegate = self
         loadingLabel.textColor = .white
         loadingLabel.text = "Loading Session..."
         
@@ -181,201 +175,35 @@ class SessionViewController: UIViewController {
         
         // (2)
         // TODO: Ensure that you do not hard code JWT or any other confidential credentials in your production app.
-        let sessionContext = ZoomVideoSDKSessionContext()
-        sessionContext.token = token
-        sessionContext.sessionName = sessionName
-        sessionContext.userName = userName
-        // sessionContext.sessionPassword = sessionPassword
-        
-        // Join Session
-        if (ZoomVideoSDK.shareInstance()?.joinSession(sessionContext)) != nil {
-            // Session joined successfully.
-            print("Session joined")
-        } else {
-            let errorAlert = UIAlertController(title: "Error", message: "Join session failed", preferredStyle: .alert)
-            errorAlert.addAction(UIAlertAction(title: "OK", style: .default))
-            present(errorAlert, animated: true)
-        }
     }
 }
     
 // MARK: ZoomVideoSDKDelegate
 // (3)
-extension SessionViewController: ZoomVideoSDKDelegate {
+extension SessionViewController {
     
     func onSessionJoin() {
         // (4)
-        localPlaceholderView.isHidden = false
-
-        // Render the current user's video
-        if let myUser = ZoomVideoSDK.shareInstance()?.getSession()?.getMySelf(),
-           // Get local user's video canvas
-           let myUserVideoCanvas = myUser.getVideoCanvas() {
-            // Turning on video for first time
-            if let myVideoIsOn = myUserVideoCanvas.videoStatus()?.on {
-                if myVideoIsOn == false {
-                    // Ensure this is called on main thread
-                    Task(priority: .background) {
-                        // Update UI
-                        self.loadingLabel.isHidden = true
-                        self.tabBar.isHidden = false
-
-                        // Subscribe to video canvas, render to local user view
-                        self.localPlaceholderView.isHidden = true
-                        self.localView.isHidden = false
-                        myUserVideoCanvas.subscribe(with: self.localView, aspectMode: .panAndScan, andResolution: ._Auto)
-                    }
-                }
-            }
-        }
     }
     
     func onUserJoin(_ helper: ZoomVideoSDKUserHelper?, users: [ZoomVideoSDKUser]?) {
         // (8)
-        // Get remote user
-        if let userArray = users, let myself = ZoomVideoSDK.shareInstance()?.getSession()?.getMySelf() {
-            for user in userArray {
-                if (user.getID() != myself.getID()) {
-                    remotePlaceholderLabel.text = user.getName()
-                    remotePlaceholderView.isHidden = false
-                    if let remoteUserVideoCanvas = user.getVideoCanvas() {
-                        Task(priority: .background) {
-                            // Subscribe to video canvas, render to remote user view
-                            remotePlaceholderView.isHidden = true
-                            remoteUserVideoCanvas.subscribe(with: self.remoteView, aspectMode: .panAndScan, andResolution: ._Auto)
-                        }
-                    }
-                    return
-                }
-            }
-        }
     }
     
     func onUserVideoStatusChanged(_ helper: ZoomVideoSDKVideoHelper?, user: [ZoomVideoSDKUser]?) {
         // (9)
-        // Get remote user
-        if let userArray = user, let myself = ZoomVideoSDK.shareInstance()?.getSession()?.getMySelf() {
-            for user in userArray {
-                if (user.getID() != myself.getID()) {
-                    // Get remote user canvas
-                    if let remoteUserVideoCanvas = user.getVideoCanvas() {
-                        // Check remote user's video status
-                        if let remoteUserVideoIsOn = remoteUserVideoCanvas.videoStatus()?.on,
-                           remoteUserVideoIsOn == true {
-                            Task(priority: .background) {
-                                remotePlaceholderView.isHidden = true
-                            }
-                        } else {
-                            Task(priority: .background) {
-                                // Update UI
-                                remotePlaceholderView.isHidden = false
-                            }
-                        }
-                    }
-                }
-                return
-            }
-        }
     }
     
     func onUserShareStatusChanged(_ helper: ZoomVideoSDKShareHelper?, user: ZoomVideoSDKUser?, shareAction: ZoomVideoSDKShareAction?) {
         // (10)
-        // Display the other user's share view only, not our own
-        if let myself = ZoomVideoSDK.shareInstance()?.getSession()?.getMySelf() {
-            guard user?.getID() != myself.getID() else {
-                return
-            }
-        }
-        
-        // Get share canvas of share action.
-        if let shareCanvas = shareAction?.getShareCanvas() {
-            // Ensure that sharing has been started.
-            if let status = shareAction?.getShareStatus()  {
-                if status == ZoomVideoSDKReceiveSharingStatus.start {
-                    // Set video aspect.
-                    let videoAspect = ZoomVideoSDKVideoAspect.panAndScan
-
-                    // Set video resolution.
-                    let videoResolution = ZoomVideoSDKVideoResolution._Auto
-                    Task(priority: .background) {
-                        // Unsubscribe to the user's video stream.
-                        user?.getVideoCanvas()?.unSubscribe(with: self.remoteView)
-                        remotePlaceholderView.isHidden = true
-
-                        // Subscribe to the user's share stream.
-                        let error = shareCanvas.subscribe(with: self.remoteView, aspectMode: videoAspect, andResolution: videoResolution)
-                        print("Share error: \(error.rawValue)")
-
-                        // Disable sharing for local user
-                        self.toggleShareBarItem.isEnabled = false
-                        toggleShareBarItem.title = "Sharing Disabled"
-                    }
-                } else if status == ZoomVideoSDKReceiveSharingStatus.stop {
-                    shareCanvas.unSubscribe(with: remoteView)
-                    // Re-subscribe to the user's video stream
-                    user?.getVideoCanvas()?.subscribe(with: self.remoteView, aspectMode: ZoomVideoSDKVideoAspect.panAndScan, andResolution: ZoomVideoSDKVideoResolution._Auto)
-                    // Re-enable sharing for local user
-                    self.toggleShareBarItem.isEnabled = true
-                    toggleShareBarItem.title = "Screen Share"
-                    
-                }
-            }
-        }
     }
     
     func onUserLeave(_ helper: ZoomVideoSDKUserHelper?, users: [ZoomVideoSDKUser]?) {
         // (11)
-        // Get remote user
-        if let userArray = users, let myself = ZoomVideoSDK.shareInstance()?.getSession()?.getMySelf() {
-            for user in userArray {
-                if (user.getID() != myself.getID()) {
-                    // Unsubscribe to remote user's video
-                    if let remoteUserVideoCanvas = user.getVideoCanvas() {
-                        Task(priority: .background) {
-                            remoteUserVideoCanvas.unSubscribe(with: self.remoteView)
-                        }
-                    }
-                    // Unsubscribe to remote user's screen share
-                    if let remoteUserShareCanvas = getStartShareAction(user)?.getShareCanvas() {
-                        Task(priority: .background) {
-                            remoteUserShareCanvas.unSubscribe(with: self.remoteView)
-                        }
-                    }
-                    return
-                }
-            }
-        }
     }
     
     func onSessionLeave() {
         // (14)
-        let myUser = ZoomVideoSDK.shareInstance()?.getSession()?.getMySelf()
-        // Unsubscribe local user's video canvas.
-        if let usersVideoCanvas = myUser?.getVideoCanvas() {
-            // Unsubscribe user's video canvas to stop rendering their video stream.
-            Task(priority: .background) {
-                usersVideoCanvas.unSubscribe(with: localView)
-            }
-        }
-        
-        // Get remote user
-        if let remoteUsers = ZoomVideoSDK.shareInstance()?.getSession()?.getRemoteUsers() {
-            for user in remoteUsers {
-                // Unsubscribe remote user's video canvas.
-                if let remoteUserVideoCanvas = user.getVideoCanvas() {
-                    Task(priority: .background) {
-                        remoteUserVideoCanvas.unSubscribe(with: self.remoteView)
-                    }
-                }
-                // Unsubscribe remote user's screen share canvas.
-                if let remoteUserShareCanvas = getStartShareAction(user)?.getShareCanvas() {
-                    Task(priority: .background) {
-                        remoteUserShareCanvas.unSubscribe(with: self.remoteView)
-                    }
-                }
-                
-            }
-        }
         
         presentingViewController?.dismiss(animated: true)
     }
@@ -383,12 +211,6 @@ extension SessionViewController: ZoomVideoSDKDelegate {
     // MARK: Convenience method
     private func getStartShareAction(_ user: ZoomVideoSDKUser) -> ZoomVideoSDKShareAction? {
         // (12)
-        guard let shareActionList = user.getShareActionList() else {
-            return nil
-        }
-
-        // get the specific share action that has .start status (screen sharing in progress)
-        return shareActionList.filter { $0.getShareStatus() == ZoomVideoSDKReceiveSharingStatus.start }.first
     }
 }
 
@@ -402,34 +224,7 @@ extension SessionViewController: UITabBarDelegate {
             tabBar.items![ControlOption.toggleVideo.rawValue].isEnabled = false
             
             // (5)
-            if let usersVideoCanvas = ZoomVideoSDK.shareInstance()?.getSession()?.getMySelf()?.getVideoCanvas(),
-               // Get ZoomVideoSDKVideoHelper to control video
-               let videoHelper = ZoomVideoSDK.shareInstance()?.getVideoHelper() {
-                
-                if let myVideoIsOn = usersVideoCanvas.videoStatus()?.on,
-                   myVideoIsOn == true {
-                    Task(priority: .background) {
-                        let error = videoHelper.stopVideo()
-                        print("Stop error: \(error.rawValue)")
-                        
-                        // Update UI
-                        toggleVideoBarItem.title = "Start Video"
-                        toggleVideoBarItem.image = UIImage(systemName: "video")
-                        localPlaceholderView.isHidden = false
-                    }
-                } else {
-                    Task(priority: .background) {
-                        let error = videoHelper.startVideo()
-                        print("Start error: \(error.rawValue)")
-                        
-                        // Update UI
-                        self.toggleVideoBarItem.title = "Stop Video"
-                        toggleVideoBarItem.image = UIImage(systemName: "video.slash")
-                        localPlaceholderView.isHidden = true
-                    }
-                }
-            }
-            
+
             tabBar.items![ControlOption.toggleVideo.rawValue].isEnabled = true
             return
             
@@ -437,30 +232,6 @@ extension SessionViewController: UITabBarDelegate {
             tabBar.items![ControlOption.toggleAudio.rawValue].isEnabled = false
             
             // (6)
-            let myUser = ZoomVideoSDK.shareInstance()?.getSession()?.getMySelf()
-            // Get the user's audio status
-            if let audioStatus = myUser?.audioStatus(),
-               // Get ZoomVideoSDKAudioHelper to control audio
-               let audioHelper = ZoomVideoSDK.shareInstance()?.getAudioHelper() {
-                
-                // Check if the user's audio type is none
-                if audioStatus.audioType == .none {
-                    audioHelper.startAudio()
-                } else {
-                    // Toggle audio based on mute status
-                    if audioStatus.isMuted {
-                        let error = audioHelper.unmuteAudio(myUser)
-                        print("Unmute error: \(error.rawValue)")
-                        toggleAudioBarItem.title = "Mute"
-                        toggleAudioBarItem.image = UIImage(systemName: "mic.slash")
-                    } else {
-                        let error = audioHelper.muteAudio(myUser)
-                        print("Mute error: \(error.rawValue)")
-                        toggleAudioBarItem.title = "Start Audio"
-                        toggleAudioBarItem.image = UIImage(systemName: "mic")
-                    }
-                }
-            }
             
             tabBar.items![ControlOption.toggleAudio.rawValue].isEnabled = true
             return
@@ -469,67 +240,6 @@ extension SessionViewController: UITabBarDelegate {
             tabBar.items![ControlOption.shareScreen.rawValue].isEnabled = false
             
             // (7)
-            // Get the ZoomVideoSDKShareHelper to perform UIView sharing actions.
-            if let shareHelper = ZoomVideoSDK.shareInstance()?.getShareHelper() {
-                // get sharing status
-                let myUser = ZoomVideoSDK.shareInstance()?.getSession()?.getMySelf()
-                guard let shareStatus = myUser?.getShareActionList()?.first?.getShareStatus() else {
-                    // No prior sharing status, so local user now starts sharing
-                    Task(priority: .background) {
-                        sharedView.isHidden = false
-                        let startResult = shareHelper.startShare(with: sharedView)
-                        if startResult == .Errors_Success {
-                            // View is now being shared. UI controls switch for stop sharing.
-                            toggleShareBarItem.image = UIImage(systemName: "rectangle.on.rectangle.slash")
-                            toggleShareBarItem.title = "Stop Sharing"
-                        } else {
-                            // The view could not be shared.
-                            print("Sharing failed")
-                        }
-                    }
-                    
-                    tabBar.items![ControlOption.shareScreen.rawValue].isEnabled = true
-                    return
-                }
-                
-                switch (shareStatus) {
-                case .none:
-                    return
-                case .start:
-                    // Local user has already been sharing, so stop
-                    Task(priority: .background) {
-                        let stopResult = shareHelper.stopShare()
-                        if stopResult == .Errors_Success {
-                            // View is no longer being shared. UI controls switch for start sharing.
-                            toggleShareBarItem.image = UIImage(systemName: "rectangle.on.rectangle")
-                            toggleShareBarItem.title = "Share Screen"
-                            sharedView.isHidden = true
-                        } else {
-                            print("Stop Sharing failed")
-                        }
-                    }
-                case .pause:
-                    return
-                case .resume:
-                    return
-                case .stop:
-                    // Local user re-starts screen sharing
-                    Task(priority: .background) {
-                        sharedView.isHidden = false
-                        let startResult = shareHelper.startShare(with: sharedView)
-                        if startResult == .Errors_Success {
-                            // View is now being shared. UI controls switch for stop sharing.
-                            toggleShareBarItem.image = UIImage(systemName: "rectangle.on.rectangle.slash")
-                            toggleShareBarItem.title = "Stop Sharing"
-                        } else {
-                            // The view could not be shared.
-                            print("Sharing failed")
-                        }
-                    }
-                @unknown default:
-                    return
-                }
-            }
             
             tabBar.items![ControlOption.shareScreen.rawValue].isEnabled = true
             return
@@ -538,18 +248,6 @@ extension SessionViewController: UITabBarDelegate {
             tabBar.isUserInteractionEnabled = false
             
             // (13)
-            // Stop screen sharing if in progress
-            if let shareHelper = ZoomVideoSDK.shareInstance()?.getShareHelper() {
-                let stopResult = shareHelper.stopShare()
-                if stopResult == .Errors_Success {
-                    print("Stop sharing succeeded")
-                } else {
-                    print("Stop sharing failed")
-                }
-            }
-            
-            ZoomVideoSDK.shareInstance()?.leaveSession(true)
-
             return
             
         default:
