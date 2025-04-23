@@ -1,0 +1,15 @@
+{
+  "originHash" : "1a97bf2964166f757fb3abfb50536c9e0eea63adc904ef13e9b6b8faa9ce356c",
+  "pins" : [
+    {
+      "identity" : "zoom-video-sdk-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/zoom/zoom-video-sdk-iOS/",
+      "state" : {
+        "branch" : "swift-package-manager",
+        "revision" : "ed4f8e5444af61f80ad10eadfb5fcc4b7bdd3f33"
+      }
+    }
+  ],
+  "version" : 3
+}
