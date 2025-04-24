@@ -197,7 +197,7 @@ extension SessionViewController: UITabBarDelegate {
               let isVideoOn = canvas.videoStatus()?.on else { return }
 
         Task(priority: .background) {
-            let error = isVideoOn ? videoHelper.stopVideo() : videoHelper.startVideo()
+            let _ = isVideoOn ? videoHelper.stopVideo() : videoHelper.startVideo()
             // Update UI to reflect new video state
             let newVideoState = !isVideoOn
             self.toggleVideoBarItem.title = newVideoState ? "Stop Video" : "Start Video"
@@ -218,7 +218,7 @@ extension SessionViewController: UITabBarDelegate {
         if audioStatus.audioType == .none {
             audioHelper.startAudio()
         } else {
-            let error = audioStatus.isMuted ? audioHelper.unmuteAudio(myUser) : audioHelper.muteAudio(myUser)
+            let _ = audioStatus.isMuted ? audioHelper.unmuteAudio(myUser) : audioHelper.muteAudio(myUser)
             toggleAudioBarItem.title = audioStatus.isMuted ? "Mute" : "Start Audio"
             toggleAudioBarItem.image = UIImage(systemName: audioStatus.isMuted ? "mic.slash" : "mic")
         }

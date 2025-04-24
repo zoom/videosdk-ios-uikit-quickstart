@@ -31,12 +31,12 @@ class StartViewController: UIViewController {
     }
 
     override func viewDidLoad() {
-        enterSessionButton.backgroundColor = .white
-        enterSessionButton.layer.cornerRadius = 8
-        enterSessionButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
-        enterSessionButton.setTitle("Join Session", for: .normal)
+        enterSessionButton.configuration = .plain()
+        enterSessionButton.configuration?.contentInsets = .init(top: 8, leading: 16, bottom: 8, trailing: 16)
+        enterSessionButton.configuration?.title = "Join Session"
+        enterSessionButton.configuration?.background.backgroundColor = .white
+        enterSessionButton.configuration?.background.cornerRadius = 8
         enterSessionButton.addTarget(self, action: #selector(enterButtonTapped(_:)), for: .touchUpInside)
-        enterSessionButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         setupSDK()
     }
 
