@@ -7,7 +7,7 @@ extension SessionViewController {
         setupConstraints()
         setupTabBar()
     }
-    
+
     private func setupViews() {
         // Setup scroll view
         scrollView.showsHorizontalScrollIndicator = false
@@ -124,7 +124,7 @@ extension SessionViewController {
 
         return (userView, placeholderView)
     }
-} 
+}
 
 func createPlaceholderView(with name: String) -> UIView {
     let placeholderView = UIView()

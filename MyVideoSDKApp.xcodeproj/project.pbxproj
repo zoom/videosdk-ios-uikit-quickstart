@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		70E8BE2C2DBA67F5004DAA36 /* SessionViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8BE2B2DBA67F5004DAA36 /* SessionViewControllerExtension.swift */; };
+		70E8BE2E2DBA6B71004DAA36 /* SignTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8BE2D2DBA6B71004DAA36 /* SignTokens.swift */; };
+		70E8BE322DBA6C36004DAA36 /* JWTKit in Frameworks */ = {isa = PBXBuildFile; productRef = 70E8BE312DBA6C36004DAA36 /* JWTKit */; };
 		810AD1802A9805EA00F94F43 /* SessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AD17F2A9805EA00F94F43 /* SessionViewController.swift */; };
 		818048692A8397AD00AC891F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818048682A8397AD00AC891F /* AppDelegate.swift */; };
 		8180486B2A8397AD00AC891F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8180486A2A8397AD00AC891F /* SceneDelegate.swift */; };
@@ -31,6 +34,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		70E8BE2B2DBA67F5004DAA36 /* SessionViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionViewControllerExtension.swift; sourceTree = "<group>"; };
+		70E8BE2D2DBA6B71004DAA36 /* SignTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignTokens.swift; sourceTree = "<group>"; };
 		810AD17F2A9805EA00F94F43 /* SessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionViewController.swift; sourceTree = "<group>"; };
 		810AD1862A9D653F00F94F43 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		810AD1882A9D654400F94F43 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -53,6 +58,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81EE79732DB7F2A9004F5A8E /* ZoomVideoSDK-iOS in Frameworks */,
+				70E8BE322DBA6C36004DAA36 /* JWTKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +88,9 @@
 				818048682A8397AD00AC891F /* AppDelegate.swift */,
 				8180486A2A8397AD00AC891F /* SceneDelegate.swift */,
 				8180486C2A8397AD00AC891F /* StartViewController.swift */,
+				70E8BE2D2DBA6B71004DAA36 /* SignTokens.swift */,
 				810AD17F2A9805EA00F94F43 /* SessionViewController.swift */,
+				70E8BE2B2DBA67F5004DAA36 /* SessionViewControllerExtension.swift */,
 				8180486E2A8397AD00AC891F /* Main.storyboard */,
 				818048712A8397AE00AC891F /* Assets.xcassets */,
 				818048732A8397AE00AC891F /* LaunchScreen.storyboard */,
@@ -150,6 +158,7 @@
 			mainGroup = 8180485C2A8397AD00AC891F;
 			packageReferences = (
 				81EE79712DB7F2A9004F5A8E /* XCRemoteSwiftPackageReference "zoom-video-sdk-iOS" */,
+				70E8BE302DBA6C36004DAA36 /* XCRemoteSwiftPackageReference "jwt-kit" */,
 			);
 			productRefGroup = 818048662A8397AD00AC891F /* Products */;
 			projectDirPath = "";
@@ -179,8 +188,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8180486D2A8397AD00AC891F /* StartViewController.swift in Sources */,
+				70E8BE2C2DBA67F5004DAA36 /* SessionViewControllerExtension.swift in Sources */,
 				810AD1802A9805EA00F94F43 /* SessionViewController.swift in Sources */,
 				818048692A8397AD00AC891F /* AppDelegate.swift in Sources */,
+				70E8BE2E2DBA6B71004DAA36 /* SignTokens.swift in Sources */,
 				8180486B2A8397AD00AC891F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -327,6 +338,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -341,7 +353,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -362,6 +374,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -376,13 +389,12 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = us.zoomtest.MyVideoSDKApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -415,6 +427,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		70E8BE302DBA6C36004DAA36 /* XCRemoteSwiftPackageReference "jwt-kit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/vapor/jwt-kit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.2;
+			};
+		};
 		81EE79712DB7F2A9004F5A8E /* XCRemoteSwiftPackageReference "zoom-video-sdk-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/zoom/zoom-video-sdk-iOS/";
@@ -426,6 +446,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		70E8BE312DBA6C36004DAA36 /* JWTKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 70E8BE302DBA6C36004DAA36 /* XCRemoteSwiftPackageReference "jwt-kit" */;
+			productName = JWTKit;
+		};
 		81EE79722DB7F2A9004F5A8E /* ZoomVideoSDK-iOS */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 81EE79712DB7F2A9004F5A8E /* XCRemoteSwiftPackageReference "zoom-video-sdk-iOS" */;

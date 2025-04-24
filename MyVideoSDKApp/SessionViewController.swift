@@ -6,11 +6,13 @@ enum ControlOption: Int {
 }
 
 class SessionViewController: UIViewController {
-    // MARK: - Properties
-    let token = ""
+    // You should sign your JWT with a backend service in a production use-case
+    let sdkKey = <#T##SDKKey##String#>
+    let sdkSecret = <#T##SDKSecret##String#>
     let sessionName = "test"
     let userName = "ios"
 
+    // MARK: - Properties
     let videoViewAspectRatio: CGFloat = 1.0
     var loadingLabel: UILabel = .init()
     var scrollView: UIScrollView = .init()
@@ -21,8 +23,9 @@ class SessionViewController: UIViewController {
     var tabBar: UITabBar = .init()
     var toggleVideoBarItem: UITabBarItem = .init(title: "Stop Video", image: UIImage(systemName: "video.slash"), tag: ControlOption.toggleVideo.rawValue)
     var toggleAudioBarItem: UITabBarItem = .init(title: "Mute", image: UIImage(systemName: "mic.slash"), tag: ControlOption.toggleAudio.rawValue)
-    
+
     // MARK: - Lifecycle Methods
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -31,22 +34,39 @@ class SessionViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        joinSession()
+        Task {
+            await joinSession()
+        }
     }
 
     // MARK: - Private Methods
-    private func joinSession() {
-        let sessionContext = ZoomVideoSDKSessionContext()
-        sessionContext.token = token
-        sessionContext.sessionName = sessionName
-        sessionContext.userName = userName
 
-        if ZoomVideoSDK.shareInstance()?.joinSession(sessionContext) == nil {
-            print("Join session failed")
-            let alert = UIAlertController(title: "Error", message: "Join session failed", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
-            present(alert, animated: true)
+    private func joinSession() async {
+        let sessionContext = ZoomVideoSDKSessionContext()
+        do {
+            let token = try await generateSignature(sessionName: sessionName, role: 1, sdkKey: sdkKey, sdkSecret: sdkSecret)
+            sessionContext.token = token
+            sessionContext.sessionName = sessionName
+            sessionContext.userName = userName
+            if ZoomVideoSDK.shareInstance()?.joinSession(sessionContext) == nil {
+                print("Join session failed")
+                showError(message: "Failed to join session")
+                return
+            }
+        } catch {
+            print("Error generating signature: \(error)")
+            showError(message: "Failed to generate session token: \(error.localizedDescription)")
             return
+        }
+    }
+
+    private func showError(message: String) {
+        Task { @MainActor in
+            let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                self.dismiss(animated: true)
+            })
+            present(alert, animated: true)
         }
     }
 }
@@ -178,8 +198,6 @@ extension SessionViewController: UITabBarDelegate {
 
         Task(priority: .background) {
             let error = isVideoOn ? videoHelper.stopVideo() : videoHelper.startVideo()
-            print("\(isVideoOn ? "Stop" : "Start") error: \(error.rawValue)")
-
             // Update UI to reflect new video state
             let newVideoState = !isVideoOn
             self.toggleVideoBarItem.title = newVideoState ? "Stop Video" : "Start Video"
@@ -201,7 +219,6 @@ extension SessionViewController: UITabBarDelegate {
             audioHelper.startAudio()
         } else {
             let error = audioStatus.isMuted ? audioHelper.unmuteAudio(myUser) : audioHelper.muteAudio(myUser)
-            print("\(audioStatus.isMuted ? "Unmute" : "Mute") error: \(error.rawValue)")
             toggleAudioBarItem.title = audioStatus.isMuted ? "Mute" : "Start Audio"
             toggleAudioBarItem.image = UIImage(systemName: audioStatus.isMuted ? "mic.slash" : "mic")
         }
