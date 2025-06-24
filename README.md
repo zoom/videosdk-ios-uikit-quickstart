@@ -6,23 +6,20 @@ The Zoom Video SDK for iOS lets you build custom video meeting applications with
 
 ## Screenshots
 
-Start View
-![startview](https://github.com/user-attachments/assets/c8f0ca9b-3113-4e13-822d-9c2689fbf4c5)
+<p>Start View</p>
+<img src="https://github.com/user-attachments/assets/37eb5100-9e64-4f10-85e4-6de4ea602638" width="320">
+<img src="https://github.com/user-attachments/assets/f74bf949-5c38-4e5f-a6f6-2946e7227132" width="320">
 
-Session View
-![onvideo](https://github.com/user-attachments/assets/5b2f3746-e3f7-4223-96f7-9b78f66a9c8d)
-![offvideo](https://github.com/user-attachments/assets/625851cc-5e9f-4c28-8b42-14fe71b2244f)
+<br><br>
 
-Share View
-![sharer](https://github.com/user-attachments/assets/9b4c63fc-67f4-400e-ae96-29702a0e64f6)
-![sharedto](https://github.com/user-attachments/assets/af642226-b4f9-4f94-87c6-28cdd7532812)
+<p>Session View</p>
+<img src="https://github.com/user-attachments/assets/4e8d4d18-bc3c-4e5a-a532-6bd78700b695" width="320">
 
 ## Features
 This repository demonstrates the basic capabilities of the Video SDK.
 - Creating/joining a session
 - Starting/stopping video
 - Muting/unmuting audio
-- Sharing the screen for a single view
 
 ## Need Help?
 If you're looking for help, try Developer Support or our Developer Forums. Priority support is also available with Zoom Premier Developer Support plans.
