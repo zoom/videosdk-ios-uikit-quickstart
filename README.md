@@ -1,28 +1,25 @@
-> :warning: The following sample application is a personal, open-source project shared by the app creator and not an officially supported Zoom Video Communications, Inc. sample application. Zoom Video Communications, Inc., its employees and affiliates are not responsible for the use and maintenance of this application. Please use this sample application for inspiration, exploration and experimentation at your own risk and enjoyment. You may reach out to the app creator and broader Zoom Developer community on https://devforum.zoom.us/ for technical discussion and assistance, but understand there is no service level agreement support for this application. Thank you and happy coding!
+# Zoom VideoSDK iOS UIKit Demo
 
-# Sample App for Zoom Video SDK (iOS)
+Use of this sample app is subject to our [Terms of Use](https://explore.zoom.us/en/video-sdk-terms/).
 
 The Zoom Video SDK for iOS lets you build custom video meeting applications with access to raw video and audio data, enabling highly-interactive, custom user experiences. This repository contains a completed sample app written in Swift with UIKit. To see the skeleton sample app template that you can implement as you follow the iOS Video SDK guide, please check out the `template` branch.
 
 ## Screenshots
 
-Start View
-![startview](https://github.com/user-attachments/assets/c8f0ca9b-3113-4e13-822d-9c2689fbf4c5)
+<p>Start View</p>
+<img src="https://github.com/user-attachments/assets/37eb5100-9e64-4f10-85e4-6de4ea602638" width="320">
+<img src="https://github.com/user-attachments/assets/f74bf949-5c38-4e5f-a6f6-2946e7227132" width="320">
 
-Session View
-![onvideo](https://github.com/user-attachments/assets/5b2f3746-e3f7-4223-96f7-9b78f66a9c8d)
-![offvideo](https://github.com/user-attachments/assets/625851cc-5e9f-4c28-8b42-14fe71b2244f)
+<br><br>
 
-Share View
-![sharer](https://github.com/user-attachments/assets/9b4c63fc-67f4-400e-ae96-29702a0e64f6)
-![sharedto](https://github.com/user-attachments/assets/af642226-b4f9-4f94-87c6-28cdd7532812)
+<p>Session View</p>
+<img src="https://github.com/user-attachments/assets/4e8d4d18-bc3c-4e5a-a532-6bd78700b695" width="320">
 
 ## Features
 This repository demonstrates the basic capabilities of the Video SDK.
 - Creating/joining a session
 - Starting/stopping video
 - Muting/unmuting audio
-- Sharing the screen for a single view
 
 ## Need Help?
 If you're looking for help, try Developer Support or our Developer Forums. Priority support is also available with Zoom Premier Developer Support plans.
