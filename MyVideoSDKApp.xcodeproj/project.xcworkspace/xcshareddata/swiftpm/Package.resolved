@@ -1,5 +1,5 @@
 {
-  "originHash" : "31da60afbc7fd0e795842cc5112999516f98a55444b420ddb9e98c376cc1625a",
+  "originHash" : "99d7f3094dafc9f58ce923c7535a8bf4a843e1fdc84820aeed51ff464bcdcbe4",
   "pins" : [
     {
       "identity" : "jwt-kit",
@@ -52,7 +52,7 @@
       "location" : "https://github.com/zoom/zoom-video-sdk-iOS/",
       "state" : {
         "branch" : "swift-package-manager",
-        "revision" : "ed4f8e5444af61f80ad10eadfb5fcc4b7bdd3f33"
+        "revision" : "64197ad272400c7bd56bdd7ae112ed8052c21972"
       }
     }
   ],
