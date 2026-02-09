@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		70E8BE2C2DBA67F5004DAA36 /* SessionViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8BE2B2DBA67F5004DAA36 /* SessionViewControllerExtension.swift */; };
-		70E8BE2E2DBA6B71004DAA36 /* SignTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8BE2D2DBA6B71004DAA36 /* SignTokens.swift */; };
-		70E8BE322DBA6C36004DAA36 /* JWTKit in Frameworks */ = {isa = PBXBuildFile; productRef = 70E8BE312DBA6C36004DAA36 /* JWTKit */; };
 		810AD1802A9805EA00F94F43 /* SessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AD17F2A9805EA00F94F43 /* SessionViewController.swift */; };
 		818048692A8397AD00AC891F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818048682A8397AD00AC891F /* AppDelegate.swift */; };
 		8180486B2A8397AD00AC891F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8180486A2A8397AD00AC891F /* SceneDelegate.swift */; };
@@ -36,7 +34,6 @@
 
 /* Begin PBXFileReference section */
 		70E8BE2B2DBA67F5004DAA36 /* SessionViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionViewControllerExtension.swift; sourceTree = "<group>"; };
-		70E8BE2D2DBA6B71004DAA36 /* SignTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignTokens.swift; sourceTree = "<group>"; };
 		810AD17F2A9805EA00F94F43 /* SessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionViewController.swift; sourceTree = "<group>"; };
 		810AD1862A9D653F00F94F43 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		810AD1882A9D654400F94F43 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -59,7 +56,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D70470BC2F2A55CD00DF6E54 /* ZoomTask in Frameworks */,
-				70E8BE322DBA6C36004DAA36 /* JWTKit in Frameworks */,
 				D70470BE2F2A55CD00DF6E54 /* ZoomVideoSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -90,7 +86,6 @@
 				818048682A8397AD00AC891F /* AppDelegate.swift */,
 				8180486A2A8397AD00AC891F /* SceneDelegate.swift */,
 				8180486C2A8397AD00AC891F /* StartViewController.swift */,
-				70E8BE2D2DBA6B71004DAA36 /* SignTokens.swift */,
 				810AD17F2A9805EA00F94F43 /* SessionViewController.swift */,
 				70E8BE2B2DBA67F5004DAA36 /* SessionViewControllerExtension.swift */,
 				8180486E2A8397AD00AC891F /* Main.storyboard */,
@@ -159,7 +154,6 @@
 			);
 			mainGroup = 8180485C2A8397AD00AC891F;
 			packageReferences = (
-				70E8BE302DBA6C36004DAA36 /* XCRemoteSwiftPackageReference "jwt-kit" */,
 				D70470BA2F2A55CD00DF6E54 /* XCRemoteSwiftPackageReference "videosdk-ios" */,
 			);
 			productRefGroup = 818048662A8397AD00AC891F /* Products */;
@@ -193,7 +187,6 @@
 				70E8BE2C2DBA67F5004DAA36 /* SessionViewControllerExtension.swift in Sources */,
 				810AD1802A9805EA00F94F43 /* SessionViewController.swift in Sources */,
 				818048692A8397AD00AC891F /* AppDelegate.swift in Sources */,
-				70E8BE2E2DBA6B71004DAA36 /* SignTokens.swift in Sources */,
 				8180486B2A8397AD00AC891F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -429,14 +422,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		70E8BE302DBA6C36004DAA36 /* XCRemoteSwiftPackageReference "jwt-kit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/vapor/jwt-kit";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.1.2;
-			};
-		};
 		D70470BA2F2A55CD00DF6E54 /* XCRemoteSwiftPackageReference "videosdk-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/zoom/videosdk-ios/";
@@ -448,11 +433,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		70E8BE312DBA6C36004DAA36 /* JWTKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 70E8BE302DBA6C36004DAA36 /* XCRemoteSwiftPackageReference "jwt-kit" */;
-			productName = JWTKit;
-		};
 		D70470BB2F2A55CD00DF6E54 /* ZoomTask */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D70470BA2F2A55CD00DF6E54 /* XCRemoteSwiftPackageReference "videosdk-ios" */;

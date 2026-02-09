@@ -6,11 +6,15 @@ enum ControlOption: Int {
 }
 
 class SessionViewController: UIViewController {
-    // You should sign your JWT with a backend service in a production use-case
-    let sdkKey = <#T##SDKKey##String#>
-    let sdkSecret = <#T##SDKSecret##String#>
-    let sessionName = "test"
-    let userName = "ios"
+    
+    /*
+     You should sign your JWT with a backend service in a production use-case
+     For faster JWT generation, you can navigate checkout the JWTGenerator.swift under Script folder and its README for more details on how to consume it. Once you got the token, you can simple copy and paste it below.
+     Ensure that the sessionName matches the session name used to generate the JWT Token.
+     */
+    let jwtToken = <#Your JWT Token#>
+    let sessionName = <#Session Name#>
+    let userName = <#Username#> // Display name
 
     // MARK: - Properties
     let videoViewAspectRatio: CGFloat = 1.0
@@ -43,19 +47,12 @@ class SessionViewController: UIViewController {
 
     private func joinSession() async {
         let sessionContext = ZoomVideoSDKSessionContext()
-        do {
-            let token = try await generateSignature(sessionName: sessionName, role: 1, sdkKey: sdkKey, sdkSecret: sdkSecret)
-            sessionContext.token = token
-            sessionContext.sessionName = sessionName
-            sessionContext.userName = userName
-            if ZoomVideoSDK.shareInstance()?.joinSession(sessionContext) == nil {
-                print("Join session failed")
-                showError(message: "Failed to join session")
-                return
-            }
-        } catch {
-            print("Error generating signature: \(error)")
-            showError(message: "Failed to generate session token: \(error.localizedDescription)")
+        sessionContext.token = jwtToken
+        sessionContext.sessionName = sessionName
+        sessionContext.userName = userName
+        if ZoomVideoSDK.shareInstance()?.joinSession(sessionContext) == nil {
+            print("Join session failed")
+            showError(message: "Failed to join session")
             return
         }
     }
