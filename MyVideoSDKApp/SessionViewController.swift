@@ -7,18 +7,22 @@ enum ControlOption: Int {
 
 class SessionViewController: UIViewController {
     
+    // MARK: Session Information
+
     /*
-     You should sign your JWT with a backend service in a production use-case
-     For faster JWT generation, you can navigate checkout the JWTGenerator.swift under Script folder and its README for more details on how to consume it. Once you got the token, you can simple copy and paste it below.
+     TODO: Enter the following variables needed to initialize the VSDK and to start/join a session
+     You should sign your JWT with a backend service in a production use-case. For faster JWT generation, you can navigate checkout the JWTGenerator.swift under Script folder and its README for more details on how to consume it.
+     Once you got the token, you can simple copy and paste it below.
      Ensure that the sessionName matches the session name used to generate the JWT Token.
      */
-    let jwtToken = <#Your JWT Token#>
-    let sessionName = <#Session Name#>
-    let userName = <#Username#> // Display name
+    let jwtToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcHBfa2V5IjoibllDdlNvUzk2bUdyancwUlYwNEoyYjdPa3pMNUl3ak1ZNHU2IiwiZXhwIjoxNzcyMTc0NTUyLCJ0cGMiOiJUZXN0U2Vzc2lvbjEyMzQ1Iiwicm9sZV90eXBlIjoxLCJpYXQiOjE3NzIxNjczNTIsInZlcnNpb24iOjF9.K1sD0qDsuI3rrOcH6eD8XoYTIJexBZIZx-3p6eVZxpA" // Leave this as empty if you choose to copy and paste your generated JWT token directly in the sample app's alert box after clicking on "Join Session"
+    let sessionName = "TestSession12345" // Also known as tpc in JWT
+    let userName = "iOS" // Display name
 
     // MARK: - Properties
     let videoViewAspectRatio: CGFloat = 1.0
     var loadingLabel: UILabel = .init()
+    var userInputJWT = ""
     var scrollView: UIScrollView = .init()
     var videoStackView: UIStackView = .init()
     var remoteUserViews: [Int: (view: UIView, placeholder: UIView)] = [:]
@@ -38,16 +42,14 @@ class SessionViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        Task {
-            await joinSession()
-        }
+        presentJWTAlert()
     }
 
     // MARK: - Private Methods
 
-    private func joinSession() async {
+    func joinSession() {
         let sessionContext = ZoomVideoSDKSessionContext()
-        sessionContext.token = jwtToken
+        sessionContext.token = jwtToken.isEmpty ? userInputJWT : jwtToken
         sessionContext.sessionName = sessionName
         sessionContext.userName = userName
         if ZoomVideoSDK.shareInstance()?.joinSession(sessionContext) == nil {
