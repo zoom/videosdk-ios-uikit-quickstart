@@ -2,7 +2,7 @@
 
 Use of this sample app is subject to our [Terms of Use](https://explore.zoom.us/en/video-sdk-terms/).
 
-The Zoom Video SDK for iOS lets you build custom video meeting applications with access to raw video and audio data, enabling highly-interactive, custom user experiences. This repository contains a completed sample app written in Swift with UIKit. To see the skeleton sample app template that you can implement as you follow the iOS Video SDK guide, please check out the `template` branch.
+The Zoom Video SDK for iOS lets you build custom video meeting applications with access to raw video and audio data, enabling highly-interactive, custom user experiences. This repository contains a completed sample app written in Swift with UIKit.
 
 ## Screenshots
 
