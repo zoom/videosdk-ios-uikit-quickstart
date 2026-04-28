@@ -54,16 +54,18 @@ class SessionViewController: UIViewController {
         sessionContext.userName = userName
         if ZoomVideoSDK.shareInstance()?.joinSession(sessionContext) == nil {
             print("Join session failed")
-            showError(message: "Failed to join session")
+            showError(message: "Failed to join session", dismiss: true)
             return
         }
     }
 
-    private func showError(message: String) {
+    public func showError(message: String, dismiss: Bool = true) {
         Task { @MainActor in
             let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-                self.dismiss(animated: true)
+                if (dismiss) {
+                    self.dismiss(animated: true)
+                }
             })
             present(alert, animated: true)
         }
